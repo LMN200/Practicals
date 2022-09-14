@@ -10,7 +10,7 @@ import operator
 import matplotlib
 import time
 
-start = time.clock()
+start = time.process_time()
 
 # def distance_between(agents_row_a, agents_row_b):
 #     print(type(agents_row_a))
@@ -50,17 +50,12 @@ for j in range(num_of_iterations):
             agents[i][1] = (agents[i][1] - 1) % 100
     #print(agents)
   
-    '''
-    answer = (((agents[0][0] - agents[1][0])**2) + ((agents[0][1] - agents[1][1])**2))**0.5
-    print(answer)
-    '''
         
 # Plot agents
 matplotlib.pyplot.ylim(0, 99)
 matplotlib.pyplot.xlim(0, 99)
 for i in range(num_of_agents):
     matplotlib.pyplot.scatter(agents[i][1],agents[i][0], c='BLUE')
-    matplotlib.pyplot.scatter(agents[i][1],agents[i][0])
 # Plot the topmost agent pink 
 topmost = max(agents, key=operator.itemgetter(0))
 matplotlib.pyplot.scatter(topmost[1],topmost[0], c='PINK')
@@ -82,11 +77,12 @@ for j in range(num_of_agents):
         distance = distance_between(agents[j], agents[i])
         print(distance)
 
-end = time.clock()
+end = time.process_time()
 
 print("time = " + str(end - start))
 
-input("Press enter to exit ;)")
+# press enter to stop kernel
+# input("Press enter to exit ;)")
 
 
 
