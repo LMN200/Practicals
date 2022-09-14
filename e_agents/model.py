@@ -64,7 +64,7 @@ leftmost = min(agents, key=operator.itemgetter(1))
 matplotlib.pyplot.scatter(leftmost[1],leftmost[0], c='BLACK')
 # Plot the bottommost agent green 
 bottommost = min(agents, key=operator.itemgetter(0))
-matplotlib.pyplot.scatter(bottommost[1],bottommost[0], c='GREEN')
+matplotlib.pyplot.scatter(bottommost[1],bottommost[0], c='BLUE')
 # Plot the rightmost agent yellow
 rightmost = max(agents, key=operator.itemgetter(1))
 matplotlib.pyplot.scatter(rightmost[1],rightmost[0], c='YELLOW')
