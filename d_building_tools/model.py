@@ -12,7 +12,7 @@ import matplotlib
 random.seed(1)
 agents = []
 num_of_agents = 10
-num_of_iterations = 50
+num_of_iterations = 100
 
 # Initialise agents
 for i in range(num_of_agents):
@@ -36,6 +36,12 @@ for j in range(num_of_iterations):
     print(agents)
   
  
+    '''
+answer = (((agents[0][0] - agents[1][0])**2) + ((agents[0][1] - agents[1][1])**2))**0.5
+print(answer)
+    '''
+    
+    
     # Plot agents
     matplotlib.pyplot.ylim(0, 99)
     matplotlib.pyplot.xlim(0, 99)
