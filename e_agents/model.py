@@ -55,7 +55,7 @@ for j in range(num_of_iterations):
 matplotlib.pyplot.ylim(0, 99)
 matplotlib.pyplot.xlim(0, 99)
 for i in range(num_of_agents):
-    matplotlib.pyplot.scatter(agents[i][1],agents[i][0], c='BLUE')
+    matplotlib.pyplot.scatter(agents[i][1],agents[i][0], c='PURPLE')
 # Plot the topmost agent pink 
 topmost = max(agents, key=operator.itemgetter(0))
 matplotlib.pyplot.scatter(topmost[1],topmost[0], c='PINK')
