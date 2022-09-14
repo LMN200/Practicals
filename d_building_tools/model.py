@@ -8,6 +8,9 @@ Created on Tue Sep 13 15:05:44 2022
 import random
 import operator
 import matplotlib
+import time
+
+start = time.clock()
 
 # def distance_between(agents_row_a, agents_row_b):
 #     print(type(agents_row_a))
@@ -78,6 +81,10 @@ for j in range(num_of_agents):
     for i in range(j + 1 , num_of_agents):
         distance = distance_between(agents[j], agents[i])
         print(distance)
+
+end = time.clock()
+
+print("time = " + str(end - start))
 
 input("Press enter to exit ;)")
 
