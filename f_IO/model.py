@@ -28,12 +28,13 @@ with open('in.txt', newline='') as f:
             # print(value)
         environment.append(rowlist)
 
-matplotlib.pyplot.imshow(environment)
-matplotlib.pyplot.show()
+# Test environment has loaded
+# matplotlib.pyplot.imshow(environment)
+# matplotlib.pyplot.show()
 
 
 
-a = agentframework.Agent()
+a = agentframework.Agent(environment)
 print(type(a))
 print(a)
 # print(a.y, a.x) # 11 7
@@ -75,7 +76,7 @@ num_of_iterations = 1
 # Initialise agents
 for i in range(num_of_agents):
     #agents.append([random.randint(0,99), random.randint(0,99)])
-    agents.append(agentframework.Agent())
+    agents.append(agentframework.Agent(environment))
 # print agents
 for i in range(num_of_agents):
     print(agents[i].x, agents[i].y)
@@ -96,7 +97,9 @@ for j in range(num_of_iterations):
     #     else:
     #         agents[i][1] = (agents[i][1] - 1) % 100
     # #print(agents)
-  
+         agents[i].eat()
+    
+    
 print("After Move")
  # print the agents
 for i in range(num_of_agents):
@@ -105,8 +108,12 @@ for i in range(num_of_agents):
 # Plot agents
 matplotlib.pyplot.ylim(0, 99)
 matplotlib.pyplot.xlim(0, 99)
+matplotlib.pyplot.imshow(environment)
 for i in range(num_of_agents):
     matplotlib.pyplot.scatter(agents[i].x,agents[i].y)
+matplotlib.pyplot.show()
+    
+    
 # # Plot the topmost agent pink 
 # topmost = max(agents, key=operator.itemgetter(0))
 # matplotlib.pyplot.scatter(topmost[1],topmost[0], c='PINK')
