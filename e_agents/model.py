@@ -9,8 +9,19 @@ import random
 import operator
 import matplotlib
 import time
+import agentframework
 
-start = time.process_time()
+# start = time.process_time()
+
+random.seed(2)
+
+a = agentframework.Agent()
+print(a)
+print(a.y, a.x) # 25 41
+a.move()
+print(a.y, a.x)
+
+
 
 # def distance_between(agents_row_a, agents_row_b):
 #     print(type(agents_row_a))
@@ -24,7 +35,6 @@ def distance_between(a, b):
     #print(answer)
     return answer
     
-random.seed(2)
 agents = []
 num_of_agents = 10
 num_of_iterations = 100
@@ -75,11 +85,11 @@ for j in range(num_of_agents):
 # Move agents
     for i in range(j + 1 , num_of_agents):
         distance = distance_between(agents[j], agents[i])
-        print(distance)
+       # print(distance)
 
 end = time.process_time()
 
-print("time = " + str(end - start))
+# print("time = " + str(end - start))
 
 # press enter to stop kernel
 # input("Press enter to exit ;)")
