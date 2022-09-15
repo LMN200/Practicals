@@ -71,7 +71,7 @@ def distance_between(a, b):
     
 agents = []
 num_of_agents = 10
-num_of_iterations = 1
+num_of_iterations = 10
 
 # Initialise agents
 for i in range(num_of_agents):
@@ -85,19 +85,18 @@ for j in range(num_of_iterations):
     # Move agents
     for i in range(num_of_agents):
         agents[i].move()
-    #     # create a torus allowing agents to leave top and cappear at the bottom,
-    #     # left to right etc.
-    #     if random.random() < 0.5:
-    #         agents[i][0] = (agents[i][0] + 1) % 100
-    #     else:
-    #         agents[i][0] = (agents[i][0] - 1) % 100
+        # # create a torus allowing agents to leave top and cappear at the bottom,
+        # # left to right etc.
+        # if random.random() < 0.5:
+        #     agents[i][0] = (agents[i][0] + 1) % 100
+        # else:
+        #     agents[i][0] = (agents[i][0] - 1) % 100
         
-    #     if random.random() < 0.5:
-    #         agents[i][1] = (agents[i][1] + 1) % 100
-    #     else:
-    #         agents[i][1] = (agents[i][1] - 1) % 100
-    # #print(agents)
-         agents[i].eat()
+        # if random.random() < 0.5:
+        #     agents[i][1] = (agents[i][1] + 1) % 100
+        # else:
+        #     agents[i][1] = (agents[i][1] - 1) % 100
+        agents[i].eat()
     
     
 print("After Move")
