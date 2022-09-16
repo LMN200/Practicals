@@ -71,7 +71,7 @@ def distance_between(a, b):
     
 agents = []
 num_of_agents = 10
-num_of_iterations = 10
+num_of_iterations = 100
 
 # Initialise agents
 for i in range(num_of_agents):
@@ -79,7 +79,8 @@ for i in range(num_of_agents):
     agents.append(agentframework.Agent(environment))
 # print agents
 for i in range(num_of_agents):
-    print(agents[i].x, agents[i].y)
+    #print(agents[i].x, agents[i].y)
+    print(agents[i])
 
 for j in range(num_of_iterations):
     # Move agents
@@ -102,8 +103,10 @@ for j in range(num_of_iterations):
 print("After Move")
  # print the agents
 for i in range(num_of_agents):
-    print(agents[i].x, agents[i].y)
-       
+    #print(agents[i].x, agents[i].y)
+    print(agents[i])
+    
+    
 # Plot agents
 matplotlib.pyplot.ylim(0, 99)
 matplotlib.pyplot.xlim(0, 99)
