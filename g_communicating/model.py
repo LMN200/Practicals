@@ -4,7 +4,6 @@ Created on Tue Sep 13 15:05:44 2022
 
 @author: gylmn
 """
-
 import random
 import operator
 import matplotlib
@@ -12,8 +11,6 @@ import agentframework
 import csv
 
 # //ds.leeds.ac.uk/student/student14/gylmn/"Leeds Module"/Practicals
-
-
 random.seed(2)
 
 #create the environment
@@ -30,15 +27,6 @@ with open('in.txt', newline='') as f:
 # Test environment has loaded
 # matplotlib.pyplot.imshow(environment)
 # matplotlib.pyplot.show()
-
-
-a = agentframework.Agent(environment)
-print(type(a))
-print(a)
-# print(a.y, a.x) # 11 7
-a.move()
-# print(a.y, a.x) # 10 8
-
 
 def distance_between(a, b):
     """
@@ -62,32 +50,30 @@ def distance_between(a, b):
 agents = []
 num_of_agents = 10
 num_of_iterations = 100
+neighbourhood = 20
 
 # Initialise agents
 for i in range(num_of_agents):
     #agents.append([random.randint(0,99), random.randint(0,99)])
-    agents.append(agentframework.Agent(environment))
+    agents.append(agentframework.Agent(i, environment, agents))
 # print agents
 for i in range(num_of_agents):
     #print(agents[i].x, agents[i].y)
     print(agents[i])
 
+print("Print out agents[1] from agents[0] as a test")
+[print(agents[0].agents[1])]
+
 for j in range(num_of_iterations):
-    # Move agents
+    random.shuffle(agents) # shuffle agents
+    # Move agents first then eat and share
     for i in range(num_of_agents):
         agents[i].move()
-        # # create a torus allowing agents to leave top and cappear at the bottom,
+        # # create a torus allowing agents to leave top and appear at the bottom,
         # # left to right etc.
-        # if random.random() < 0.5:
-        #     agents[i][0] = (agents[i][0] + 1) % 100
-        # else:
-        #     agents[i][0] = (agents[i][0] - 1) % 100
-        
-        # if random.random() < 0.5:
-        #     agents[i][1] = (agents[i][1] + 1) % 100
-        # else:
-        #     agents[i][1] = (agents[i][1] - 1) % 100
+    for i in range(num_of_agents):
         agents[i].eat()
+        agents[i].share_with_neighbours(neighbourhood)
     
     
 print("After Move")
