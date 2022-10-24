@@ -52,6 +52,11 @@ num_of_agents = 10
 num_of_iterations = 100
 neighbourhood = 20
 
+# Animation
+fig = matplotlib.pyplot.figure(figsize=(7, 7))
+ax = fig.add_axes([0, 0, 1, 1])
+
+
 # Initialise agents
 for i in range(num_of_agents):
     #agents.append([random.randint(0,99), random.randint(0,99)])
@@ -64,8 +69,11 @@ for i in range(num_of_agents):
 print("Print out agents[1] from agents[0] as a test")
 [print(agents[0].agents[1])]
 
-for j in range(num_of_iterations):
-    random.shuffle(agents) # shuffle agents
+# Move agents
+def update(frame_number):
+    
+    fig.clear()  
+    #random.shuffle(agents) # shuffle agents
     # Move agents first then eat and share
     for i in range(num_of_agents):
         agents[i].move()
@@ -76,19 +84,22 @@ for j in range(num_of_iterations):
         agents[i].share_with_neighbours(neighbourhood)
     
     
-print("After Move")
- # print the agents
-for i in range(num_of_agents):
-    #print(agents[i].x, agents[i].y)
-    print(agents[i])
-    
-    
-# Plot agents
-matplotlib.pyplot.ylim(0, 99)
-matplotlib.pyplot.xlim(0, 99)
-matplotlib.pyplot.imshow(environment)
-for i in range(num_of_agents):
-    matplotlib.pyplot.scatter(agents[i].x,agents[i].y)
+    # print("After Move")
+    #  # print the agents
+    # for i in range(num_of_agents):
+    #     #print(agents[i].x, agents[i].y)
+    #     print(agents[i])
+        
+        
+    # Plot agents
+    matplotlib.pyplot.ylim(0, 99)
+    matplotlib.pyplot.xlim(0, 99)
+    matplotlib.pyplot.imshow(environment)
+    for i in range(num_of_agents):
+        matplotlib.pyplot.scatter(agents[i].x,agents[i].y)
+
+animation = matplotlib.animation.FuncAnimation(fig, update, interval=1)
+
 matplotlib.pyplot.show()
 
 
