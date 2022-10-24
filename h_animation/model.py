@@ -69,10 +69,14 @@ for i in range(num_of_agents):
 print("Print out agents[1] from agents[0] as a test")
 [print(agents[0].agents[1])]
 
+carry_on = True	
+
 # Move agents
 def update(frame_number):
     
-    fig.clear()  
+    print("iteration", frame_number)
+    fig.clear()
+    global carry_on
     #random.shuffle(agents) # shuffle agents
     # Move agents first then eat and share
     for i in range(num_of_agents):
@@ -83,6 +87,21 @@ def update(frame_number):
         agents[i].eat()
         agents[i].share_with_neighbours(neighbourhood)
     
+    # # Stopping condition - Random
+    # if random.random() < 0.1:
+    #     carry_on = False
+    #     print("stopping condition")
+    
+    
+    # Stopping Condition - All agents food store > 20
+    stop = False
+    count = 0
+    for i in range(num_of_agents):
+        if (agents[i].store > 80):
+            count = count + 1
+    if count == len(agents):
+        print("stopping condition at frame", frame_number)
+        carry_on = False
     
     # print("After Move")
     #  # print the agents
@@ -98,8 +117,16 @@ def update(frame_number):
     for i in range(num_of_agents):
         matplotlib.pyplot.scatter(agents[i].x,agents[i].y)
 
-animation = matplotlib.animation.FuncAnimation(fig, update, interval=1)
+def gen_function(b = [0]):
+    a = 0
+    global carry_on #Not actually needed as we're not assigning, but clearer
+    while (a < 10) & (carry_on) :
+        yield a			# Returns control and waits next call.
+        a = a + 1
 
+# animation = matplotlib.animation.FuncAnimation(
+   # fig, update, interval=1, repeat=False, frames=num_of_iterations)
+animation = matplotlib.animation.FuncAnimation(fig, update, frames=gen_function, repeat=False)
 matplotlib.pyplot.show()
 
 
