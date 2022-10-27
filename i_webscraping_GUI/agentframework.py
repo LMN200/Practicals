@@ -2,14 +2,20 @@ import random
 
 class Agent:
     
-    def __init__(self, i, environment, agents):
+    def __init__(self, i, environment, agents, y=None, x=None):
         self.i = i
         self.environment = environment
         self.agents = agents
         self.store = 0
-        self.x = random.randint(0,99)
-        self.y = random.randint(0,99)
-    
+        if x == None:
+            self.x = random.randint(0,99)
+        else:
+            self.x = x
+        if y == None:
+            self.y = random.randint(0,99)
+        else:
+            self.y = y
+        
     def __str__(self):
         return "i=" + str(self.i) + ", store=" + str(self.store) \
             + ", x=" + str(self.x) + ", y=" + str(self.y)
