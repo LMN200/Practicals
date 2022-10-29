@@ -1,2 +1,2 @@
-# Practicals
-hhhh
+# GEOG5995M Assignment 1
+
