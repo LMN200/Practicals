@@ -79,7 +79,7 @@ def animate(frame_number):
         agents[i].share_with_neighbours(neighbourhood, breeding_distance)
         agents[i].age += 1
 
-    # Stopping Condition - 90 counts yeilds roughly 80 agents (depending on last
+    # Stopping Condition - 90 counts yeilds roughly 90 agents (depending on last
     # breeding cycle number of lambs / distance of rams from ewes) + inital 10 agents
     stop = False
     count = 0
@@ -88,7 +88,7 @@ def animate(frame_number):
             count += 1   
         if count == 90:  # count can be increased here to run model for longer
             print("stopping condition at frame", frame_number)
-            print(len(agents))
+            print("total number of agents =", len(agents))
             carry_on = False
 
     # print("After Move")

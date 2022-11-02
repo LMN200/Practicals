@@ -108,7 +108,7 @@ class Agent:
 
                 if distance <= breeding_distance:
                     if self.age > 5 and self.agents[i].age > 5 and self.i != i and (self.ram or self.agents[i].ram):
-                        if self.ram and self.agents[i].ram:  # We don't want two gay rams
+                        if self.ram and self.agents[i].ram:  # We don't want two rams
                             print(f'no breeding.. two rams {self.age=} {self.agents[i].age=}')
                         else:
                             print(f'time to breed {self.age=} {self.ram=} {self.agents[i].age=} {self.agents[i].ram=}')
