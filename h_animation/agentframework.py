@@ -26,7 +26,7 @@ class Agent:
             self.y = y
         else:
             self.y = random.randint(0, 99)
-            # self.y = 99
+            # self.y = 99 # test for torus movement
 
         print(f'{self=}')
 
@@ -37,10 +37,6 @@ class Agent:
 
     def move(self):
         print(f'move: {len(self.agents)=}')
-
-        # change x coordinate
-
-        # print(f'({self.x}, {self.y})')
 
         self.old_x = deepcopy(self.x)
 
@@ -64,7 +60,7 @@ class Agent:
         print(f'({self.old_x}, {self.old_y}) --> ({self.x}, {self.y})')
 
     def eat(self):
-        # can you make it eat what is left?
+        # agents to eat the environemnt
         print(f'{self.environment[self.y][self.x]=}')
 
         if self.environment[self.y][self.x] > 10:
@@ -81,18 +77,16 @@ class Agent:
     def share_with_neighbours(self, neighbourhood, breeding_distance):
         print(f'we was ere {len(self.agents)}')
         # sharing with neighbours
-        # Loop through the agents in self.agents .
+        # Loop through the agents in self.agents
 
         print(f'{len(self.agents)=}')
 
         for i in range(len(self.agents)):
             # Calculate the distance between self and the current other agent:
-
             distance = self.distance_between(self.agents[i])
             print(f'distance = {distance}')
 
             # If distance is less than or equal to the neighbourhood
-
             if distance <= neighbourhood:
                 # Sum self.store and agent.store .
                 # Divide sum by two to calculate average.
@@ -106,6 +100,8 @@ class Agent:
                 else:
                     print(f"we didn't need to share {self.store=} {i=} {self.i=}")
 
+                # if distance is less than breeding distance between ram and ewe
+                # and agents are older than 5 = breed function
                 if distance <= breeding_distance:
                     if self.age > 5 and self.agents[i].age > 5 and self.i != i and (self.ram or self.agents[i].ram):
                         if self.ram and self.agents[i].ram:  # We don't want two rams
@@ -113,15 +109,15 @@ class Agent:
                         else:
                             print(f'time to breed {self.age=} {self.ram=} {self.agents[i].age=} {self.agents[i].ram=}')
                             self.breed(breed_with=i)
-                            Agent.counter += 1
+                            Agent.counter += 1 
                             if Agent.counter > 200:
                                 pass
                                 # exit(5)
 
-                elif self.age <= 5 or self.agents[i].age <= 5:
+                elif self.age <= 5 or self.agents[i].age <= 5: # aged 5 or less = too young
                     print(f'no breeding this time - too young {self.age=} {self.agents[i].age=}')
 
-                elif self.i == i:
+                elif self.i == i: # can't breed with self
                     print(f"can't breed with yourself {self.age=} {self.agents[i].age}")
 
     def breed(self, breed_with):
@@ -134,7 +130,7 @@ class Agent:
         :rtype:
         """
 
-        # one of these Will definitely be a ram as we can't come into this method otherwise
+        # one of these will definitely be a ram as we can't come into this method otherwise
         if not self.ram:
             breeding_x, breeding_y = (self.x, self.y)
         else:
@@ -172,6 +168,8 @@ class Agent:
         print(f'{breed_with=} ')
         # exit(0)
 
+    # distance calculation - due to torus, distance is calculated in both
+    # directions to ensure smallest distance
     def distance_between(self, b):
         print(f'{self.x=} {self.y=} {b.x=} {b.y=}')
         x_distance = abs(self.x - b.x)  # default

@@ -26,7 +26,7 @@ class Agent:
             self.y = y
         else:
             self.y = random.randint(0, 99)
-            # self.y = 99
+            # self.y = 99 # test for torus movement
 
         print(f'{self=}')
 
