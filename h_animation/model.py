@@ -1,147 +1,126 @@
 # -*- coding: utf-8 -*-
 """
 Created on Tue Sep 13 15:05:44 2022
-
 @author: gylmn
 """
+# Import packages
 import random
-import operator
-import matplotlib
 import agentframework
 import csv
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 
-# //ds.leeds.ac.uk/student/student14/gylmn/"Leeds Module"/Practicals
-random.seed(2)
+plt.interactive(False)
 
-#create the environment
-environment = []
+# calculate/define calculation for distance
+def distance_between(a, b):
+    x_distance = abs(a.x - b.x)  # default
+    y_distance = abs(a.y - b.y)  # default
+
+    # Due to torus, distance can be calculated in both directions to
+    # ensure smallest distance
+    if x_distance > 50:
+        x_distance = 100 - x_distance
+
+    if y_distance > 50:
+        y_distance = 100 - y_distance
+
+    round((float((x_distance ** 2) + (y_distance) ** 2)) ** 0.5, 2)
+
+# create the environment - open list of lists
 with open('in.txt', newline='') as f:
     dataset = csv.reader(f, quoting=csv.QUOTE_NONNUMERIC)
-    for row in dataset:
-        rowlist = []
-        for value in row:
-            rowlist.append(value)
-            # print(value)
-        environment.append(rowlist)
+    environment = [line for line in dataset]
 
-# Test environment has loaded
-# matplotlib.pyplot.imshow(environment)
-# matplotlib.pyplot.show()
+# # Test environment has loaded
+#plt.imshow(environment)
 
-def distance_between(a, b):
-    """
-    Calculates and returned the distance between a and b
 
-    Parameters
-    ----------
-    a : TYPE
-        DESCRIPTION.
-    b : TYPE
-        DESCRIPTION.
-
-    Returns
-    -------
-    TYPE
-        DESCRIPTION.
-
-    """
-    return (((a.x - b.x)**2) + ((a.y - b.y)**2))**0.5
-      
+# create agents list
 agents = []
+
+# set limits/ assign values for all functions and classes
 num_of_agents = 10
 num_of_iterations = 100
 neighbourhood = 20
+breeding_distance = 10
+max_number_of_rams = 2
 
-# Animation
-fig = matplotlib.pyplot.figure(figsize=(7, 7))
+# create figure with size limits
+fig = plt.figure(figsize=(7, 7))
 ax = fig.add_axes([0, 0, 1, 1])
 
+# plot environment
+im = ax.imshow(environment)
 
 # Initialise agents
 for i in range(num_of_agents):
-    #agents.append([random.randint(0,99), random.randint(0,99)])
-    agents.append(agentframework.Agent(i, environment, agents))
-# print agents
-for i in range(num_of_agents):
-    #print(agents[i].x, agents[i].y)
-    print(agents[i])
+    ram = True
+    if i > max_number_of_rams:
+        ram = False
+    agents.append(agentframework.Agent(i, environment, agents, ram=ram))
 
 print("Print out agents[1] from agents[0] as a test")
-[print(agents[0].agents[1])]
 
-carry_on = True	
+carry_on = True
 
-# Move agents
-def update(frame_number):
-    
+# Make animation containing move, eat, share, breed
+def animate(frame_number):
     print("iteration", frame_number)
     fig.clear()
     global carry_on
-    #random.shuffle(agents) # shuffle agents
-    # Move agents first then eat and share
-    for i in range(num_of_agents):
-        agents[i].move()
-        # # create a torus allowing agents to leave top and appear at the bottom,
-        # # left to right etc.
-    for i in range(num_of_agents):
+
+    # Move agents first then eat, share and breed
+    for i in range(len(agents)):
+        agents[i].move()  # agents can move in all directions across torus
+
+    for i in range(len(agents)):
         agents[i].eat()
-        agents[i].share_with_neighbours(neighbourhood)
-    
-    # # Stopping condition - Random
-    # if random.random() < 0.1:
-    #     carry_on = False
-    #     print("stopping condition")
-    
-    
-    # Stopping Condition - All agents food store > 20
+        agents[i].share_with_neighbours(neighbourhood, breeding_distance)
+        agents[i].age += 1
+
+    # Stopping Condition - 90 counts yeilds roughly 80 agents (depending on last
+    # breeding cycle number of lambs / distance of rams from ewes) + inital 10 agents
     stop = False
     count = 0
-    for i in range(num_of_agents):
-        if (agents[i].store > 80):
-            count = count + 1
-    if count == len(agents):
-        print("stopping condition at frame", frame_number)
-        carry_on = False
-    
+    for i in range(len(agents)):
+        if len(agents) >= 10:
+            count += 1   
+        if count == 90:  # count can be increased here to run model for longer
+            print("stopping condition at frame", frame_number)
+            print(len(agents))
+            carry_on = False
+
     # print("After Move")
     #  # print the agents
     # for i in range(num_of_agents):
     #     #print(agents[i].x, agents[i].y)
     #     print(agents[i])
-        
-        
-    # Plot agents
-    matplotlib.pyplot.ylim(0, 99)
-    matplotlib.pyplot.xlim(0, 99)
-    matplotlib.pyplot.imshow(environment)
-    for i in range(num_of_agents):
-        matplotlib.pyplot.scatter(agents[i].x,agents[i].y)
 
-def gen_function(b = [0]):
+    # Plot agents onto figure - blue for rams, red for ewes (all other agents)
+    plt.ylim(0, 99)
+    plt.xlim(0, 99)
+    plt.imshow(environment)
+
+    for i in range(len(agents)):
+        if agents[i].ram:
+            c = "blue"
+        else:
+            c = "red"
+        plt.scatter(agents[i].x, agents[i].y, c=c)
+    im.set_array(environment)
+    return im,
+
+
+# use gen_function to start at frame 0 and add one each time to know what
+# framenumber model finishes on
+def gen_function(b=[0]):
     a = 0
-    global carry_on #Not actually needed as we're not assigning, but clearer
-    while (a < 10) & (carry_on) :
-        yield a			# Returns control and waits next call.
+    global carry_on
+    while (a < 1000) & (carry_on):
+        yield a  # Returns control and waits next call.
         a = a + 1
 
-# animation = matplotlib.animation.FuncAnimation(
-   # fig, update, interval=1, repeat=False, frames=num_of_iterations)
-animation = matplotlib.animation.FuncAnimation(fig, update, frames=gen_function, repeat=False)
-matplotlib.pyplot.show()
-
-
-for j in range(num_of_agents):
-# Move agents
-    for i in range(j + 1 , num_of_agents):
-        distance = distance_between(agents[j], agents[i])
-       # print(distance)
-
-# press enter to stop kernel
-# input("Press enter to exit ;)")
-
-
-
-
-
-
+animation = FuncAnimation(fig, animate, frames=gen_function, repeat=False)
+plt.show()
 

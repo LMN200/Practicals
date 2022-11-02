@@ -5,7 +5,7 @@ Created on Tue Sep 13 15:05:44 2022
 """
 # Import packages
 import random
-import agentframework24
+import agentframework
 import csv
 import matplotlib.animation
 import matplotlib.backends.backend_tkagg as tkagg
@@ -81,7 +81,7 @@ for i in range(num_of_agents):
         y = int(td_ys[i].text)
         x = int(td_xs[i].text)
         print(f'({x}, {y})')
-    agents.append(agentframework24.Agent(i, environment, agents, ram=ram, x=x, y=y))
+    agents.append(agentframework.Agent(i, environment, agents, ram=ram, x=x, y=y))
 
 # print("Print out agents[1] from agents[0] as a test")
 
